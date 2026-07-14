@@ -168,6 +168,11 @@
         const $modalLink = $modal.find('.project-modal__link');
         const $closeBtn = $modal.find('.project-modal__close');
 
+        // Stop propagation on project link click so parent handler doesn't run
+        $('.folio-item__project-link').on('click', function(e) {
+            e.stopPropagation();
+        });
+
         // Open modal on portfolio item click
         $('.folio-item').on('click', function(e) {
             e.preventDefault();
@@ -184,6 +189,11 @@
 
             $modal.addClass('is-open');
             $modal.attr('aria-hidden', 'false');
+        });
+
+        // Also prevent the thumb link from doing anything
+        $('.folio-item__thumb-link').on('click', function(e) {
+            e.preventDefault();
         });
 
         // Close modal
