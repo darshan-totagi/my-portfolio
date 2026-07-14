@@ -158,55 +158,48 @@
 
 
 
-   /* photoswipe
+   /* project info modal
     * ----------------------------------------------------- */
     const ssPhotoswipe = function() {
-        const items = [],
-            $pswp = $('.pswp')[0],
-            $folioItems = $('.folio-item');
+        const $modal = $('.project-modal');
+        const $modalTitle = $modal.find('.project-modal__title');
+        const $modalCategory = $modal.find('.project-modal__category');
+        const $modalDescription = $modal.find('.project-modal__description');
+        const $modalLink = $modal.find('.project-modal__link');
+        const $closeBtn = $modal.find('.project-modal__close');
 
-        // get items
-        $folioItems.each( function(i) {
+        // Open modal on portfolio item click
+        $('.folio-item').on('click', function(e) {
+            e.preventDefault();
+            const $item = $(this);
+            const title = $item.find('.folio-item__title').text();
+            const category = $item.find('.folio-item__cat').text();
+            const description = $item.find('.folio-item__caption p').text();
+            const link = $item.find('.folio-item__project-link').attr('href');
 
-            let $folio = $(this),
-                $thumbLink =  $folio.find('.folio-item__thumb-link'),
-                $title = $folio.find('.folio-item__title'),
-                $caption = $folio.find('.folio-item__caption'),
-                $titleText = '<h4>' + $.trim($title.html()) + '</h4>',
-                $captionText = $.trim($caption.html()),
-                $href = $thumbLink.attr('href'),
-                $size = $thumbLink.data('size').split('x'),
-                $width  = $size[0],
-                $height = $size[1];
-        
-            let item = {
-                src  : $href,
-                w    : $width,
-                h    : $height
-            }
+            $modalTitle.text(title);
+            $modalCategory.text(category);
+            $modalDescription.text(description);
+            $modalLink.attr('href', link);
 
-            if ($caption.length > 0) {
-                item.title = $.trim($titleText + $captionText);
-            }
-
-            items.push(item);
+            $modal.addClass('is-open');
+            $modal.attr('aria-hidden', 'false');
         });
 
-        // bind click event
-        $folioItems.each(function(i) {
+        // Close modal
+        const closeModal = function() {
+            $modal.removeClass('is-open');
+            $modal.attr('aria-hidden', 'true');
+        };
 
-            $(this).find('.folio-item__thumb-link').on('click', function(e) {
-                e.preventDefault();
-                let options = {
-                    index: i,
-                    showHideOpacity: true
-                }
-
-                // initialize PhotoSwipe
-                let lightBox = new PhotoSwipe($pswp, PhotoSwipeUI_Default, items, options);
-                lightBox.init();
-            });
-
+        $closeBtn.on('click', closeModal);
+        $modal.find('.project-modal__bg').on('click', closeModal);
+        
+        // Close on escape key
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' && $modal.hasClass('is-open')) {
+                closeModal();
+            }
         });
     };
 
