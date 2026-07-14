@@ -2498,7 +2498,6 @@ html.no-csstransitions .hero-content {
 .position {
   padding: 3.6rem 3rem;
   background: #ffffff;
-  border-left: 4px solid #f9861a;
   border-radius: 8px;
   margin-bottom: 2rem;
   transition: all 0.3s ease;
@@ -2509,7 +2508,6 @@ html.no-csstransitions .hero-content {
   background: #ffffff;
   box-shadow: 0 15px 40px rgba(0,0,0,0.12);
   transform: translateY(-4px);
-  border-left-color: #e0750a;
 }
 
 .position__header {
